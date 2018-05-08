@@ -1,0 +1,65 @@
+<view class='container'>
+    <view class="page__bd">
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                    <input type="text" bindconfirm='formSubmit' class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+                    <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                        <icon type="clear" size="14"></icon>
+                    </view>
+                </view>
+                <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+                    <icon class="weui-icon-search" type="search" size="14"></icon>
+                    <view class="weui-search-bar__text">搜索城市名称</view>
+                </label>
+            </view>
+            <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+        </view>
+
+        <view class="page__bd">
+            <view class="weui-grids">
+                <block wx:for="{{searchResult}}" wx:key="*this">
+                    <view url="" class="weui-grid" hover-class="weui-grid_active" bindtap="turnToHome" data-key="{{item.region_id}}" data-name='{{item.region_name}}'>
+                        <view class="weui-grid__label">{{item.region_name}}</view>
+                    </view>
+                </block>
+            </view>
+        </view>
+
+        <view class='title'>当前城市</view>
+
+        <view class="page__bd">
+            <view class="weui-grids">
+                <block>
+                    <view url="" class="weui-grid" hover-class="weui-grid_active" bindtap="turnToHome" data-key="{{currentCity.id}}" data-name="{{currentCity.city_name}}">
+                        <view class="weui-grid__label">{{currentCity.city_name}}</view>
+                    </view>
+                </block>
+            </view>
+        </view>
+
+        <view class='title'>热门城市</view>
+
+        <view class="page__bd">
+            <view class="weui-grids">
+                <block wx:for="{{hot_city}}" wx:key="*this">
+                    <view url="" class="weui-grid" hover-class="weui-grid_active" bindtap="turnToHome" data-key="{{item.id}}" data-name="{{item.name}}">
+                        <view class="weui-grid__label">{{item.name}}</view>
+                    </view>
+                </block>
+            </view>
+        </view>
+
+        <view class='title'>全部城市</view>
+
+        <view class="page__bd">
+            <view class="weui-grids">
+                <view wx:for="{{allCity}}" wx:key="id">
+                    <view class='city-group-title'>{{item.id}}</view>
+                    <view class='item-city' wx:for="{{item.name.list}}" wx:key='region_id' bindtap="turnToHome" data-key="{{item.region_id}}" data-name="{{item.region_name}}">{{item.region_name}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

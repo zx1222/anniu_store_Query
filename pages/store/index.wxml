@@ -1,0 +1,16 @@
+<view class="container ">
+    <view class='flex align-items-center header wrp'>
+        <image src='../../src/images/logo.jpg'></image>
+        <text>{{storeInfo.branch_name}}</text>
+    </view>
+    <view class='flex justify-content-between align-items-center item wrp' bindtap='turnToMap'>
+        <view class='location'>
+            <text class="fa fa-map-marker" aria-hidden="true"></text> {{storeInfo.address}}</view>
+        <text class='fa fa-angle-right icon'></text>
+    </view>
+    <view class='flex justify-content-between align-items-center item wrp' bindtap='dialing'>
+        <view>
+            <text class="fa fa-phone" aria-hidden="true"></text> {{storeInfo.telephone}}</view>
+        <text class='fa fa-angle-right icon '></text>
+    </view>
+</view>

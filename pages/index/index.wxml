@@ -1,0 +1,93 @@
+<!--index.wxml-->
+<view class="{{openRegion||open?'forbidScroll':''}} container">
+    <!--蒙层  -->
+    <view class='mask' wx:if='{{openRegion||open}}' bindtap='closeRegion'></view>
+    <!--搜索栏  -->
+    <view class="{{openRegion||open?'levelUp':''}} search-wrp wrp">
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                    <input type="text" bindconfirm='formSubmit' class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindfocus="closeRegion" bindinput="inputTyping" />
+                    <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                        <icon type="clear" size="14"></icon>
+                    </view>
+                </view>
+                <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+                    <icon class="weui-icon-search" type="search" size="14"></icon>
+                    <view class="weui-search-bar__text">搜索门店名称、地址</view>
+                </label>
+            </view>
+            <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+        </view>
+
+        <view class='row flex'>
+            <view class='city tab' bindtap='turnToCity'>{{city.location}}
+                <text class='fa fa-angle-down icon'></text>
+            </view>
+            <view bindtap='openRegion' class='region tab'>{{currentRegion}}
+                <text class='fa fa-angle-down icon'></text>
+            </view>
+            <view class='getLocation' bindtap='getLocation'>
+                附近药店
+                <text class="fa fa-crosshairs" aria-hidden="true"></text>
+            </view>
+        </view>
+    </view>
+
+    <!--删选栏  -->
+    <view class="{{openRegion||open?'levelUp':''}} dropdown-wrp flex  justify-content-betwee">
+        <!-- <view class='dropdown-tab'> -->
+        <!-- <view class='dropdown-item' bindtap='openRegion'>
+                <text>区域</text>
+                <text class='fa fa-angle-down icon'></text>
+            </view>  -->
+        <view class='no-data' wx:if="{{noData}}"><view>您要查找的药店不在当前区域</view><view>换个区域再试一下</view></view>
+    
+        <view class='itemList-wrp' wx:if='{{openRegion||open}}'>
+            <view class="{{item.active?'active':''}} item" wx:for="{{regionList}}" bindtap='selectRegion' data-id='{{item.region_id}}'>
+                {{item.region_name}}
+                <text class='fa fa-angle-right icon'></text>
+            </view>
+        </view>
+        <!-- </view> -->
+
+        <!-- <view class='dropdown-tab'>
+            <view class='dropdown-item' bindtap='openNearby'>附近
+                <text class='fa fa-angle-down icon'></text>
+            </view>
+            <view class='itemList-wrp' wx:if='{{openNearby}}'>
+                <view class="{{item.active?'active':''}} item" wx:for="{{nearbyList}}" bindtap='selectNearby' data-id='{{item.id}}'>
+                    {{item.name}}
+                    <text class='fa fa-angle-right icon'></text>
+                </view>
+            </view>
+        </view> -->
+    </view>
+
+    <!--门店列表  -->
+    <view class='store-list-wrp'>
+        <view class='store-item-wrp flex align-items-center' bindtap='turnToStore' wx:for="{{storeList}}" wx:key='{{item.index}}' data-id='{{item.id}}'>
+            <image src="../../src/images/logo.jpg"></image>
+            <view>
+                <view class='branch-name'>{{item.branch_name}}</view>
+                <view class='location'>{{item.address}}</view>
+                <!-- <view class='tag-wrp'>
+                    <view class='tag flex' wx:for="{{item.tags}}" wx:key='{{item.index}}'>
+                        {{item}}
+                    </view>
+                </view> -->
+            </view>
+        </view>
+
+        <!--加载  -->
+        <view class="weui-loadmore" wx:if="{{loading}}">
+            <view class="weui-loading"></view>
+            <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+        <!--暂无更多  -->
+        <view class='loadmore-end' wx:if="{{loadmore_end}}">
+            暂无更多数据
+        </view>
+    </view>
+</view>
